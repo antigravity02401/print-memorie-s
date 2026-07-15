@@ -355,19 +355,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function stopMusic() {
       isPlaying = false;
       clearTimeout(schedTimer);
-
       // Fade out
       masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
       masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
       masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-
       setUIPlaying(false);
-
       musicLabel.textContent = '♪ Musik dimatikan';
       musicLabel.classList.add('visible');
       setTimeout(() => musicLabel.classList.remove('visible'), 2000);
     }
-
     function setUIPlaying(playing) {
       if (playing) {
         musicIcon.classList.add('playing');
@@ -380,8 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // ── Button click toggle ───────────────────────────────────
-    musicBtn.addEventListener('click', () => {
+    // ── Button click: toggle play/pause ──────────────────────
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (isPlaying) {
         stopMusic();
       } else {
@@ -389,30 +386,46 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // ── Show label hint on load ───────────────────────────────
-    setTimeout(() => {
-      musicLabel.classList.add('visible');
-      setTimeout(() => musicLabel.classList.remove('visible'), 3500);
-    }, 1800);
-
-    // ── Autoplay on FIRST user interaction ───────────────────
-    // (required by all modern browsers incl. Safari)
-    const onFirstGesture = () => {
+    // ── Triggered by intro overlay button click ───────────────
+    document.addEventListener('startWeddingMusic', () => {
       startMusic();
-      document.removeEventListener('click',      onFirstGesture);
-      document.removeEventListener('touchstart', onFirstGesture);
-      document.removeEventListener('scroll',     onFirstGesture);
-      document.removeEventListener('keydown',    onFirstGesture);
-    };
+    });
 
-    document.addEventListener('click',      onFirstGesture, { once: true });
-    document.addEventListener('touchstart', onFirstGesture, { once: true });
-    document.addEventListener('scroll',     onFirstGesture, { once: true, passive: true });
-    document.addEventListener('keydown',    onFirstGesture, { once: true });
-
-    // Default state: paused icon
+    // Default: paused icon
     setUIPlaying(false);
   }
 
-});
+  /* ─── Intro Overlay ─────────────────────────── */
+  const introOverlay  = document.getElementById('introOverlay');
+  const introEnterBtn = document.getElementById('introEnterBtn');
+  const introParticlesEl = document.getElementById('introParticles');
 
+  // Spawn floating gold particles
+  if (introParticlesEl) {
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.classList.add('intro-particle');
+      const size = Math.random() * 5 + 2;
+      p.style.width  = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left   = Math.random() * 100 + '%';
+      p.style.animationDuration  = (Math.random() * 8 + 6) + 's';
+      p.style.animationDelay     = (Math.random() * 6) + 's';
+      introParticlesEl.appendChild(p);
+    }
+  }
+
+  if (introEnterBtn && introOverlay) {
+    introEnterBtn.addEventListener('click', () => {
+      // Dispatch event to start music (trusted click context)
+      document.dispatchEvent(new CustomEvent('startWeddingMusic'));
+
+      // Dismiss overlay with fade
+      introOverlay.classList.add('dismissed');
+      setTimeout(() => {
+        introOverlay.style.display = 'none';
+      }, 950);
+    });
+  }
+
+});

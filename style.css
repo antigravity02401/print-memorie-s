@@ -1875,3 +1875,239 @@ footer {
     height: 46px;
   }
 }
+
+/* ══════════════════════════════════
+   INTRO OVERLAY
+══════════════════════════════════ */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(ellipse at 50% 40%, #1a1208 0%, #0a0806 50%, #000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.9s ease, visibility 0.9s ease;
+}
+
+.intro-overlay.dismissed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Floating gold particles */
+.intro-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.intro-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.9), rgba(201,168,76,0));
+  animation: introParticleFloat linear infinite;
+  opacity: 0;
+}
+
+@keyframes introParticleFloat {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+}
+
+/* Main content */
+.intro-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: introFadeIn 1.2s ease forwards;
+}
+
+@keyframes introFadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animated rings */
+.intro-rings-wrap {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  animation: introPulseRing ease-in-out infinite;
+}
+
+.intro-ring-1 { width: 80px;  height: 80px;  animation-duration: 2.4s; animation-delay: 0s; }
+.intro-ring-2 { width: 106px; height: 106px; animation-duration: 2.4s; animation-delay: 0.5s; }
+.intro-ring-3 { width: 130px; height: 130px; animation-duration: 2.4s; animation-delay: 1s; }
+
+@keyframes introPulseRing {
+  0%,100% { opacity: 0.15; transform: scale(0.96); }
+  50%      { opacity: 0.7;  transform: scale(1.04); border-color: rgba(232,201,109,0.6); }
+}
+
+.intro-emoji {
+  font-size: 46px;
+  animation: introRingFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 16px rgba(201,168,76,0.6));
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes introRingFloat {
+  0%,100% { transform: translateY(0) rotate(-5deg); }
+  50%      { transform: translateY(-8px) rotate(5deg); }
+}
+
+/* Brand name */
+.intro-brand {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: #e8c96d;
+  text-shadow:
+    0 0 30px rgba(232, 201, 109, 0.5),
+    0 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  animation: introFadeIn 1.4s 0.2s both;
+}
+
+.intro-tagline {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.65rem, 2vw, 0.8rem);
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.65);
+  margin-bottom: 24px;
+  animation: introFadeIn 1.4s 0.4s both;
+}
+
+/* Decorative divider */
+.intro-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 auto 32px;
+  width: fit-content;
+  animation: introFadeIn 1.4s 0.5s both;
+}
+
+.intro-divider span:not(.intro-divider-dot) {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+}
+
+.intro-divider-dot {
+  color: #c9a84c;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Enter button */
+.intro-enter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #c9a84c 0%, #e8c96d 50%, #c9a84c 100%);
+  background-size: 200% 200%;
+  animation: introBtnGradient 3s ease infinite, introFadeIn 1.4s 0.7s both;
+  color: #1a1008;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow:
+    0 4px 24px rgba(201, 168, 76, 0.45),
+    0 0 0 0 rgba(201, 168, 76, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-enter-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 52px;
+  background: linear-gradient(135deg, #e8c96d, #c9a84c, #e8c96d);
+  z-index: -1;
+  animation: introBtnGlow 2s ease-in-out infinite;
+}
+
+@keyframes introBtnGlow {
+  0%,100% { opacity: 0.5; filter: blur(4px); }
+  50%      { opacity: 1;   filter: blur(8px); }
+}
+
+@keyframes introBtnGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.intro-enter-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 8px 36px rgba(201, 168, 76, 0.65),
+    0 0 0 6px rgba(201, 168, 76, 0.12);
+}
+
+.intro-enter-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.intro-btn-icon {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.intro-btn-music {
+  font-size: 1rem;
+}
+
+/* Hint text */
+.intro-hint {
+  margin-top: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(201,168,76,0.4);
+  letter-spacing: 1px;
+  animation: introFadeIn 1.4s 1s both, introPulseHint 2.5s 2s ease-in-out infinite;
+}
+
+@keyframes introPulseHint {
+  0%,100% { opacity: 0.4; }
+  50%      { opacity: 0.8; }
+}
+
+/* Bottom decorative dots */
+.intro-overlay::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.5) 50%, transparent 100%);
+}
+

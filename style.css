@@ -1680,3 +1680,198 @@ footer {
   .hero-btns { flex-direction: column; }
   .hero-btns .btn { width: 100%; justify-content: center; }
 }
+
+/* ══════════════════════════════════
+   MUSIC PLAYER
+══════════════════════════════════ */
+.music-player {
+  position: fixed;
+  bottom: 100px;
+  left: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.music-btn {
+  pointer-events: all;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #c9a14a, #e8c97a, #c9a14a);
+  background-size: 200% 200%;
+  animation: musicBtnGradient 4s ease infinite;
+  box-shadow:
+    0 4px 20px rgba(201, 161, 74, 0.5),
+    0 0 0 0 rgba(201, 161, 74, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 6px 28px rgba(201, 161, 74, 0.7),
+    0 0 0 6px rgba(201, 161, 74, 0.15);
+}
+
+.music-btn.paused {
+  animation: none;
+  background: linear-gradient(135deg, #6b6b6b, #999, #6b6b6b);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+@keyframes musicBtnGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Pulse ring when playing */
+.music-btn::before {
+  content: '';
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 161, 74, 0.5);
+  animation: musicRing 2s ease-out infinite;
+}
+
+.music-btn.paused::before {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes musicRing {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* Music icon container */
+.music-icon {
+  color: #1a1008;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Note SVG shown when paused */
+.music-note-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.music-note-svg {
+  width: 22px;
+  height: 22px;
+  animation: musicNoteRotate 4s linear infinite;
+}
+
+.music-icon.paused .music-note-svg {
+  animation: none;
+}
+
+@keyframes musicNoteRotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Equalizer bars */
+.music-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.music-icon.playing .music-note-wrap {
+  opacity: 0;
+}
+
+.music-icon.playing .music-bars {
+  opacity: 1;
+}
+
+.music-icon.paused .music-bars {
+  opacity: 0;
+}
+
+.music-icon.paused .music-note-wrap {
+  opacity: 1;
+}
+
+.music-bars span {
+  display: block;
+  width: 3px;
+  border-radius: 3px 3px 0 0;
+  background: #1a1008;
+  min-height: 4px;
+}
+
+.music-bars span:nth-child(1) { animation: bar1 0.8s ease-in-out infinite; }
+.music-bars span:nth-child(2) { animation: bar2 0.6s ease-in-out infinite 0.1s; }
+.music-bars span:nth-child(3) { animation: bar3 0.9s ease-in-out infinite 0.2s; }
+.music-bars span:nth-child(4) { animation: bar4 0.7s ease-in-out infinite 0.05s; }
+
+@keyframes bar1 { 0%,100%{height:5px} 50%{height:18px} }
+@keyframes bar2 { 0%,100%{height:12px} 50%{height:6px} }
+@keyframes bar3 { 0%,100%{height:8px} 50%{height:20px} }
+@keyframes bar4 { 0%,100%{height:15px} 50%{height:4px} }
+
+/* Music label */
+.music-label {
+  pointer-events: none;
+  background: rgba(26, 16, 8, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #e8c97a;
+  font-size: 11px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(201, 161, 74, 0.3);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.music-player:hover .music-label,
+.music-label.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .music-player {
+    bottom: 90px;
+    left: 16px;
+  }
+  .music-btn {
+    width: 46px;
+    height: 46px;
+  }
+}

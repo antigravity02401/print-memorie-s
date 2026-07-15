@@ -209,4 +209,117 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 100);
 
+  /* ─── Background Music Player ──────────────── */
+  const bgMusic    = document.getElementById('bgMusic');
+  const musicBtn   = document.getElementById('musicBtn');
+  const musicIcon  = document.getElementById('musicIcon');
+  const musicLabel = document.getElementById('musicLabel');
+
+  if (bgMusic && musicBtn) {
+    let isPlaying = false;
+    bgMusic.volume = 0.35;
+
+    // Show label briefly on page load
+    setTimeout(() => {
+      musicLabel.classList.add('visible');
+      setTimeout(() => musicLabel.classList.remove('visible'), 3500);
+    }, 1500);
+
+    // Try autoplay; browsers usually block it until user gesture
+    const tryAutoplay = () => {
+      bgMusic.play().then(() => {
+        setPlaying(true);
+      }).catch(() => {
+        // Will be played on first user gesture
+        setPlaying(false);
+      });
+    };
+
+    // Play on first user interaction if autoplay blocked
+    const onFirstInteraction = () => {
+      if (!isPlaying) {
+        bgMusic.play().then(() => {
+          setPlaying(true);
+        }).catch(() => {});
+      }
+      document.removeEventListener('click', onFirstInteraction);
+      document.removeEventListener('touchstart', onFirstInteraction);
+      document.removeEventListener('scroll', onFirstInteraction);
+    };
+
+    document.addEventListener('click', onFirstInteraction, { once: true });
+    document.addEventListener('touchstart', onFirstInteraction, { once: true });
+    document.addEventListener('scroll', onFirstInteraction, { once: true });
+
+    // Fade in music
+    function fadeIn(audio, targetVol, duration) {
+      audio.volume = 0;
+      const steps = 40;
+      const increment = targetVol / steps;
+      const interval = duration / steps;
+      const timer = setInterval(() => {
+        if (audio.volume + increment >= targetVol) {
+          audio.volume = targetVol;
+          clearInterval(timer);
+        } else {
+          audio.volume += increment;
+        }
+      }, interval);
+    }
+
+    // Fade out music
+    function fadeOut(audio, duration, cb) {
+      const startVol = audio.volume;
+      const steps = 40;
+      const decrement = startVol / steps;
+      const interval = duration / steps;
+      const timer = setInterval(() => {
+        if (audio.volume - decrement <= 0) {
+          audio.volume = 0;
+          audio.pause();
+          clearInterval(timer);
+          if (cb) cb();
+        } else {
+          audio.volume -= decrement;
+        }
+      }, interval);
+    }
+
+    function setPlaying(playing) {
+      isPlaying = playing;
+      if (playing) {
+        musicIcon.classList.remove('paused');
+        musicIcon.classList.add('playing');
+        musicBtn.classList.remove('paused');
+      } else {
+        musicIcon.classList.remove('playing');
+        musicIcon.classList.add('paused');
+        musicBtn.classList.add('paused');
+      }
+    }
+
+    // Toggle play/pause on button click
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        fadeOut(bgMusic, 800);
+        setPlaying(false);
+        musicLabel.classList.add('visible');
+        musicLabel.textContent = '♪ Musik dimatikan';
+        setTimeout(() => musicLabel.classList.remove('visible'), 2000);
+      } else {
+        bgMusic.play().then(() => {
+          fadeIn(bgMusic, 0.35, 1000);
+          setPlaying(true);
+          musicLabel.classList.add('visible');
+          musicLabel.textContent = '♪ Romantic Serenade';
+          setTimeout(() => musicLabel.classList.remove('visible'), 2500);
+        }).catch(() => {});
+      }
+    });
+
+    // Initial state: show paused until autoplay resolves
+    setPlaying(false);
+    setTimeout(tryAutoplay, 500);
+  }
+
 });

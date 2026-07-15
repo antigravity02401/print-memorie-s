@@ -428,4 +428,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ─── Portfolio "Show More" Logic (Mobile) ───────────── */
+  const portfolioGrid = document.getElementById('portfolioGrid');
+  const portfolioMoreBtn = document.getElementById('portfolio-more-btn');
+  
+  if (portfolioGrid && portfolioMoreBtn) {
+    portfolioMoreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Remove the class that hides the extra cards
+      portfolioGrid.classList.remove('hide-more');
+      // Hide the button itself after showing all cards
+      portfolioMoreBtn.style.display = 'none';
+      
+      // Optionally update the CTA text
+      const ctaText = portfolioMoreBtn.previousElementSibling;
+      if (ctaText && ctaText.tagName.toLowerCase() === 'p') {
+        ctaText.textContent = 'Semua tema telah ditampilkan.';
+      }
+    });
+  }
+
 });

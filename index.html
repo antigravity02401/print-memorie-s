@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Print Memorie's — Platform undangan pernikahan digital premium. Buat undangan pernikahan digital yang elegan, modern, dan berkesan. Tersedia berbagai tema mewah dengan fitur musik, countdown timer, RSVP, galeri foto, dan peta lokasi." />
+  <meta name="keywords" content="undangan pernikahan digital, undangan online, undangan digital premium, wedding invitation digital, undangan pernikahan online" />
+  <meta name="author" content="Print Memorie's" />
+  <meta property="og:title" content="Print Memorie's — Undangan Pernikahan Digital Premium" />
+  <meta property="og:description" content="Wujudkan momen pernikahan impian Anda dengan undangan digital elegan yang tak terlupakan." />
+  <meta property="og:type" content="website" />
+  <title>Print Memorie's — Undangan Pernikahan Digital Premium</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAVBAR
+══════════════════════════════════ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Print Memorie's - Home">
+        <span class="nav-logo-script">Print Memorie's</span>
+        <span class="nav-logo-sub">Undangan Pernikahan Digital</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about" id="nav-about">Tentang Kami</a></li>
+        <li><a href="#features" id="nav-features">Fitur</a></li>
+        <li><a href="#portfolio" id="nav-portfolio">Portofolio</a></li>
+        <li><a href="#pricing" id="nav-pricing">Harga</a></li>
+        <li><a href="#faq" id="nav-faq">FAQ</a></li>
+        <li><a href="#contact" id="nav-contact">Kontak</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20memesan%20undangan%20digital%20%F0%9F%92%8D"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="nav-wa"
+           id="nav-wa-btn">
+          💬 Chat Sekarang
+        </a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" class="mobile-nav-link">Tentang Kami</a>
+  <a href="#features" class="mobile-nav-link">Fitur Unggulan</a>
+  <a href="#portfolio" class="mobile-nav-link">Portofolio</a>
+  <a href="#how-it-works" class="mobile-nav-link">Cara Pesan</a>
+  <a href="#pricing" class="mobile-nav-link">Harga</a>
+  <a href="#faq" class="mobile-nav-link">FAQ</a>
+  <a href="#contact" class="mobile-nav-link">Kontak</a>
+  <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20memesan%20undangan%20digital%20%F0%9F%92%8D"
+     target="_blank" rel="noopener noreferrer"
+     class="btn btn-gold" style="justify-content:center;margin-top:8px;">
+    💬 Chat WhatsApp
+  </a>
+</div>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section id="hero" aria-labelledby="hero-title">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <!-- Floating particles -->
+  <div class="hero-particles" id="heroParticles"></div>
+
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-eyebrow">✦ Undangan Digital Premium ✦</span>
+      <h1 class="hero-title" id="hero-title">
+        Wujudkan Momen<br />
+        <span class="highlight">Pernikahan Impian</span><br />
+        Anda
+      </h1>
+      <p class="hero-desc">
+        Undangan pernikahan digital elegan yang menawan, dilengkapi musik, countdown timer, RSVP, galeri foto, dan peta lokasi. Kirim ke ribuan tamu dalam hitungan detik.
+      </p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn btn-gold" id="hero-portfolio-btn">
+          ✨ Lihat Contoh Undangan
+        </a>
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20memesan%20undangan%20digital%20%F0%9F%92%8D"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline"
+           id="hero-order-btn">
+          💬 Pesan Sekarang
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     MARQUEE
+══════════════════════════════════ -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- Items duplicated via JS -->
+    <span class="marquee-item">💍 Undangan Digital<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🎵 Backsound Musik<span class="marquee-dot"></span></span>
+    <span class="marquee-item">⏳ Countdown Timer<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📍 Peta Lokasi<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📸 Galeri Foto<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📋 RSVP Online<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🌐 Bisa Dibagikan<span class="marquee-dot"></span></span>
+    <span class="marquee-item">💫 Animasi Premium<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📱 Tampil di HP<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🎨 Desain Elegan<span class="marquee-dot"></span></span>
+    <!-- Duplicated for seamless loop -->
+    <span class="marquee-item">💍 Undangan Digital<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🎵 Backsound Musik<span class="marquee-dot"></span></span>
+    <span class="marquee-item">⏳ Countdown Timer<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📍 Peta Lokasi<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📸 Galeri Foto<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📋 RSVP Online<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🌐 Bisa Dibagikan<span class="marquee-dot"></span></span>
+    <span class="marquee-item">💫 Animasi Premium<span class="marquee-dot"></span></span>
+    <span class="marquee-item">📱 Tampil di HP<span class="marquee-dot"></span></span>
+    <span class="marquee-item">🎨 Desain Elegan<span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     ABOUT
+══════════════════════════════════ -->
+<section id="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Image -->
+      <div class="about-image-wrap fade-left">
+        <div class="about-image-frame">
+          <img src="assets/images/about.png"
+               alt="Undangan pernikahan digital Print Memorie's — flat lay dengan smartphone, bunga, dan cincin"
+               loading="lazy" />
+        </div>
+        <div class="about-badge">
+          <span class="about-badge-num">100+</span>
+          <span class="about-badge-label">Undangan Dibuat</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="about-content fade-right">
+        <span class="section-tag">Tentang Kami</span>
+        <h2 class="section-title" id="about-title">
+          Kami Hadir untuk<br />
+          <span class="text-gold">Mengabadikan</span> Momen<br />
+          Spesial Anda
+        </h2>
+        <div class="gold-divider gold-divider-left"></div>
+        <p class="section-subtitle">
+          Print Memorie's adalah studio undangan pernikahan digital yang berkomitmen menghadirkan desain premium, elegan, dan berkesan. Setiap undangan kami dirancang dengan penuh cinta dan perhatian detail.
+        </p>
+
+        <div class="about-points">
+          <div class="about-point">
+            <div class="about-point-icon">🎨</div>
+            <div class="about-point-text">
+              <h4>Desain Eksklusif</h4>
+              <p>Tema-tema premium yang dirancang oleh desainer profesional, tampil elegan di semua perangkat.</p>
+            </div>
+          </div>
+          <div class="about-point">
+            <div class="about-point-icon">⚡</div>
+            <div class="about-point-text">
+              <h4>Pengiriman Cepat</h4>
+              <p>Undangan siap dalam 1-3 hari kerja, revisi tak terbatas hingga Anda puas.</p>
+            </div>
+          </div>
+          <div class="about-point">
+            <div class="about-point-icon">💝</div>
+            <div class="about-point-text">
+              <h4>Layanan Personal</h4>
+              <p>Konsultasi langsung via WhatsApp, kami siap membantu dari awal hingga hari H.</p>
+            </div>
+          </div>
+          <div class="about-point">
+            <div class="about-point-icon">🔒</div>
+            <div class="about-point-text">
+              <h4>Aktif Selamanya</h4>
+              <p>Link undangan aktif seumur hidup, bisa diakses kapan saja dan di mana saja.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20konsultasi%20undangan%20digital"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-gold"
+           id="about-cta-btn">
+          💬 Konsultasi Gratis
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FEATURES
+══════════════════════════════════ -->
+<section id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="features-header fade-up">
+      <span class="section-tag">Fitur Unggulan</span>
+      <h2 class="section-title" id="features-title">
+        Semua yang Anda Butuhkan<br />
+        <span class="text-gold">Ada di Sini</span>
+      </h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Undangan digital kami hadir dengan berbagai fitur interaktif yang membuat tamu undangan terkesan.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up delay-1">
+        <div class="feature-icon">🎵</div>
+        <h3>Backsound Musik</h3>
+        <p>Musik romantis mengiringi setiap momen saat tamu membuka undangan Anda, menciptakan suasana yang berkesan.</p>
+      </div>
+      <div class="feature-card fade-up delay-2">
+        <div class="feature-icon">⏳</div>
+        <h3>Countdown Timer</h3>
+        <p>Hitung mundur hari pernikahan secara real-time, menambah rasa antisipasi dan kegembiraan bagi tamu.</p>
+      </div>
+      <div class="feature-card fade-up delay-3">
+        <div class="feature-icon">📋</div>
+        <h3>RSVP Online</h3>
+        <p>Tamu dapat mengonfirmasi kehadiran langsung dari undangan, memudahkan Anda mengelola jumlah peserta.</p>
+      </div>
+      <div class="feature-card fade-up delay-1">
+        <div class="feature-icon">📍</div>
+        <h3>Peta & Navigasi</h3>
+        <p>Terintegrasi dengan Google Maps, tamu langsung bisa navigasi ke lokasi acara dengan satu klik.</p>
+      </div>
+      <div class="feature-card fade-up delay-2">
+        <div class="feature-icon">📸</div>
+        <h3>Galeri Foto</h3>
+        <p>Tampilkan foto-foto pre-wedding Anda dalam galeri yang indah dan elegan di dalam undangan.</p>
+      </div>
+      <div class="feature-card fade-up delay-3">
+        <div class="feature-icon">💌</div>
+        <h3>Ucapan & Doa</h3>
+        <p>Kolom ucapan interaktif agar tamu dapat mengirimkan doa dan harapan terbaik untuk kedua mempelai.</p>
+      </div>
+      <div class="feature-card fade-up delay-1">
+        <div class="feature-icon">🎞️</div>
+        <h3>Animasi Premium</h3>
+        <p>Efek animasi halus dan elegan yang membuat undangan terlihat hidup dan profesional.</p>
+      </div>
+      <div class="feature-card fade-up delay-2">
+        <div class="feature-icon">📱</div>
+        <h3>Responsif Mobile</h3>
+        <p>Tampil sempurna di semua perangkat — smartphone, tablet, maupun komputer. Tanpa perlu install aplikasi.</p>
+      </div>
+      <div class="feature-card fade-up delay-3">
+        <div class="feature-icon">🔗</div>
+        <h3>Nama Tamu Custom</h3>
+        <p>Link undangan bisa menampilkan nama tamu secara otomatis, sentuhan personal yang berkesan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PORTFOLIO
+══════════════════════════════════ -->
+<section id="portfolio" aria-labelledby="portfolio-title">
+  <div class="container">
+    <div class="portfolio-header fade-up">
+      <span class="section-tag">Portofolio</span>
+      <h2 class="section-title" id="portfolio-title">
+        Contoh <span class="text-gold">Karya Kami</span>
+      </h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Berikut beberapa contoh undangan digital premium yang telah kami buat. Klik untuk melihat demo langsung.
+      </p>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <!-- Card 1 -->
+      <div class="portfolio-card fade-up delay-1">
+        <div class="portfolio-preview">
+          <!-- Ganti URL di bawah dengan link undangan Anda yang sudah dihosting -->
+          <iframe
+            src="http://localhost/undanganpernikahan_tyo-juli/"
+            title="Preview Undangan — Tyo & Juli"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin"
+          ></iframe>
+          <div class="portfolio-preview-overlay">
+            <a href="http://localhost/undanganpernikahan_tyo-juli/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="portfolio-preview-btn"
+               id="portfolio-demo-1">
+              👁️ Lihat Demo
+            </a>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <p class="portfolio-label">Tema Premium</p>
+          <h3>Undangan Tyo &amp; Juli</h3>
+          <p>Tema elegan dengan sentuhan gold dan floral, dilengkapi animasi smooth dan musik romantis.</p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">🎵 Musik</span>
+            <span class="portfolio-tag">⏳ Countdown</span>
+            <span class="portfolio-tag">📸 Galeri</span>
+            <span class="portfolio-tag">📍 Maps</span>
+          </div>
+          <a href="http://localhost/undanganpernikahan_tyo-juli/"
+             target="_blank" rel="noopener noreferrer"
+             class="portfolio-link-btn">
+            🔗 Buka Demo →
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="portfolio-card fade-up delay-2">
+        <div class="portfolio-preview">
+          <!-- Ganti URL ini dengan undangan ke-2 Anda -->
+          <div class="portfolio-preview-placeholder">
+            <span class="preview-icon">💍</span>
+            <p>Demo Undangan #2</p>
+          </div>
+          <div class="portfolio-preview-overlay">
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20tertarik%20dengan%20tema%20ini"
+               target="_blank" rel="noopener noreferrer"
+               class="portfolio-preview-btn"
+               id="portfolio-demo-2">
+              💬 Tanya Tema Ini
+            </a>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <p class="portfolio-label">Tema Floral</p>
+          <h3>Undangan Tema Rustic</h3>
+          <p>Nuansa hangat dan alami dengan dekorasi floral, cocok untuk pernikahan garden party.</p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">🌸 Floral</span>
+            <span class="portfolio-tag">📋 RSVP</span>
+            <span class="portfolio-tag">💌 Ucapan</span>
+          </div>
+          <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20tertarik%20tema%20Rustic%20Floral"
+             target="_blank" rel="noopener noreferrer"
+             class="portfolio-link-btn">
+            💬 Pesan Tema Ini →
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="portfolio-card fade-up delay-3">
+        <div class="portfolio-preview">
+          <!-- Ganti URL ini dengan undangan ke-3 Anda -->
+          <div class="portfolio-preview-placeholder">
+            <span class="preview-icon">👑</span>
+            <p>Demo Undangan #3</p>
+          </div>
+          <div class="portfolio-preview-overlay">
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20tertarik%20dengan%20tema%20Modern%20Luxury"
+               target="_blank" rel="noopener noreferrer"
+               class="portfolio-preview-btn"
+               id="portfolio-demo-3">
+              💬 Tanya Tema Ini
+            </a>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <p class="portfolio-label">Tema Modern</p>
+          <h3>Undangan Tema Modern Luxury</h3>
+          <p>Desain minimalis modern dengan sentuhan mewah, sempurna untuk pasangan berselera tinggi.</p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">✨ Mewah</span>
+            <span class="portfolio-tag">⏳ Countdown</span>
+            <span class="portfolio-tag">📍 Maps</span>
+            <span class="portfolio-tag">📋 RSVP</span>
+          </div>
+          <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20tertarik%20tema%20Modern%20Luxury"
+             target="_blank" rel="noopener noreferrer"
+             class="portfolio-link-btn">
+            💬 Pesan Tema Ini →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-cta fade-up">
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;">
+        Ingin melihat lebih banyak tema atau diskusi desain custom?
+      </p>
+      <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20melihat%20lebih%20banyak%20contoh%20undangan"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-outline"
+         id="portfolio-more-btn">
+        🎨 Lihat Lebih Banyak Tema
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════ -->
+<section id="how-it-works" aria-labelledby="how-title">
+  <div class="container">
+    <div class="how-header fade-up">
+      <span class="section-tag">Cara Pesan</span>
+      <h2 class="section-title" id="how-title">
+        Proses Pemesanan yang<br />
+        <span class="text-gold">Mudah &amp; Cepat</span>
+      </h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Hanya 4 langkah mudah, undangan digital impian Anda siap dikirim ke semua tamu.
+      </p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card fade-up delay-1">
+        <div class="step-number"><span class="step-icon">💬</span></div>
+        <h3>Konsultasi</h3>
+        <p>Hubungi kami via WhatsApp, ceritakan konsep dan tema yang Anda inginkan. Konsultasi gratis!</p>
+      </div>
+      <div class="step-card fade-up delay-2">
+        <div class="step-number"><span class="step-icon">📝</span></div>
+        <h3>Isi Data</h3>
+        <p>Kirimkan data mempelai, detail acara, foto pre-wedding, dan informasi yang perlu ditampilkan.</p>
+      </div>
+      <div class="step-card fade-up delay-3">
+        <div class="step-number"><span class="step-icon">💳</span></div>
+        <h3>Bayar &amp; Proses</h3>
+        <p>Lakukan pembayaran sesuai paket yang dipilih. Undangan diproses dalam 1-3 hari kerja.</p>
+      </div>
+      <div class="step-card fade-up delay-4">
+        <div class="step-number"><span class="step-icon">🎉</span></div>
+        <h3>Terima Link</h3>
+        <p>Undangan siap! Anda mendapatkan link yang bisa langsung dibagikan ke semua tamu via WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     STATISTICS
+══════════════════════════════════ -->
+<section id="stats" aria-label="Statistik Print Memorie's">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up delay-1">
+        <div class="stat-number" data-target="150" id="stat-1">0</div>
+        <div class="stat-label">Undangan Dibuat</div>
+      </div>
+      <div class="stat-item fade-up delay-2">
+        <div class="stat-number" data-target="120" id="stat-2">0</div>
+        <div class="stat-label">Pelanggan Puas</div>
+      </div>
+      <div class="stat-item fade-up delay-3">
+        <div class="stat-number" data-target="15" id="stat-3">0</div>
+        <div class="stat-label">Tema Tersedia</div>
+      </div>
+      <div class="stat-item fade-up delay-4">
+        <div class="stat-number" id="stat-4">⭐ 5.0</div>
+        <div class="stat-label">Rating Pelanggan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PRICING
+══════════════════════════════════ -->
+<section id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="pricing-header fade-up">
+      <span class="section-tag">Paket Harga</span>
+      <h2 class="section-title" id="pricing-title">
+        Pilihan Paket <span class="text-gold">Terbaik</span><br />
+        untuk Anda
+      </h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Pilih paket yang sesuai kebutuhan. Semua paket sudah termasuk revisi dan link aktif selamanya.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- Basic -->
+      <div class="pricing-card fade-up delay-1">
+        <p class="pricing-plan">Basic</p>
+        <div class="pricing-price">
+          <span class="amount">Rp 75K</span>
+          <span class="period"> / undangan</span>
+        </div>
+        <p class="pricing-desc">
+          Cocok untuk pasangan yang ingin undangan digital simpel namun tetap elegan.
+        </p>
+        <ul class="pricing-features">
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Pilihan dari 5 tema
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Data mempelai & acara
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Countdown timer
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Peta Google Maps
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Link aktif selamanya
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            2x revisi
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon no">✗</span>
+            <span style="color:var(--text-muted)">Galeri foto</span>
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon no">✗</span>
+            <span style="color:var(--text-muted)">RSVP online</span>
+          </li>
+        </ul>
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20paket%20Basic"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline"
+           style="width:100%;justify-content:center;"
+           id="pricing-basic-btn">
+          Pilih Basic
+        </a>
+      </div>
+
+      <!-- Standard (Featured) -->
+      <div class="pricing-card featured fade-up delay-2">
+        <div class="pricing-badge">Terpopuler ⭐</div>
+        <p class="pricing-plan">Standard</p>
+        <div class="pricing-price">
+          <span class="amount">Rp 120K</span>
+          <span class="period"> / undangan</span>
+        </div>
+        <p class="pricing-desc">
+          Paket paling diminati! Dilengkapi fitur lengkap untuk pengalaman undangan yang sempurna.
+        </p>
+        <ul class="pricing-features">
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Pilihan dari 10 tema
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Data mempelai & acara
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Countdown timer
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Peta Google Maps
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Galeri foto (10 foto)
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            RSVP online
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Kolom ucapan
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Backsound musik
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            5x revisi
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Link aktif selamanya
+          </li>
+        </ul>
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20paket%20Standard"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-gold"
+           style="width:100%;justify-content:center;"
+           id="pricing-standard-btn">
+          ✨ Pilih Standard
+        </a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card fade-up delay-3">
+        <p class="pricing-plan">Premium</p>
+        <div class="pricing-price">
+          <span class="amount">Rp 200K</span>
+          <span class="period"> / undangan</span>
+        </div>
+        <p class="pricing-desc">
+          Paket eksklusif dengan desain custom sepenuhnya dan fitur paling lengkap.
+        </p>
+        <ul class="pricing-features">
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Desain custom penuh
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Semua fitur Standard
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Galeri foto (20+ foto)
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Nama tamu otomatis
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Amplop digital
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Sub-domain sendiri
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Revisi tidak terbatas
+          </li>
+          <li class="pricing-feature">
+            <span class="pricing-feature-icon yes">✓</span>
+            Prioritas penyelesaian
+          </li>
+        </ul>
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20paket%20Premium"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline"
+           style="width:100%;justify-content:center;"
+           id="pricing-premium-btn">
+          👑 Pilih Premium
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════ -->
+<section id="testimonials" aria-labelledby="testimonials-title">
+  <div class="container">
+    <div class="testimonials-header fade-up">
+      <span class="section-tag">Testimoni</span>
+      <h2 class="section-title" id="testimonials-title">
+        Kata Mereka tentang<br />
+        <span class="text-gold">Print Memorie's</span>
+      </h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Ratusan pasangan telah mempercayakan momen spesial mereka kepada kami.
+      </p>
+    </div>
+  </div>
+
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track" id="testimonialsTrack">
+      <!-- Testimonials 1-6 -->
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Undangannya cantik banget! Tamu-tamu pada kagum dan banyak yang tanya bikinnya di mana. Pelayanannya juga ramah dan responsif. Highly recommended!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-author-name">Ayu &amp; Reza</div>
+            <div class="testimonial-author-detail">Pernikahan, Desember 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Prosesnya gampang banget, tinggal kirim data langsung jadi. Desainnya mewah tapi harganya sangat terjangkau. Puas banget sama hasilnya!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#c9a84c,#e8a8b8)">R</div>
+          <div>
+            <div class="testimonial-author-name">Rina &amp; Dimas</div>
+            <div class="testimonial-author-detail">Pernikahan, Januari 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Fitur RSVP-nya sangat membantu! Jadi tau pasti berapa tamu yang hadir. Countdown timer-nya juga keren, bikin makin excited nunggu hari H!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#7b8fc9,#c9a84c)">F</div>
+          <div>
+            <div class="testimonial-author-name">Fitri &amp; Arman</div>
+            <div class="testimonial-author-detail">Pernikahan, Februari 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Revisinya cepet dan sabar banget ngikutin request saya yang banyak haha. Hasilnya luar biasa, semua tamu bilang undangannya paling keren!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#e8a8b8,#7bc9a8)">S</div>
+          <div>
+            <div class="testimonial-author-name">Sari &amp; Bagas</div>
+            <div class="testimonial-author-detail">Pernikahan, Maret 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Musiknya pas banget sama tema undangan kami yang romantis. Banyak tamu yang terharu waktu buka undangannya. Terima kasih Print Memorie's!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#a87bc9,#c9a84c)">N</div>
+          <div>
+            <div class="testimonial-author-name">Nadya &amp; Farhan</div>
+            <div class="testimonial-author-detail">Pernikahan, April 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Lebih hemat dan praktis dari undangan cetak biasa. Bisa dibagikan lewat WA dengan mudah. Link-nya masih aktif sampai sekarang, seneng banget!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#c9a84c,#7b8fc9)">D</div>
+          <div>
+            <div class="testimonial-author-name">Dewi &amp; Eko</div>
+            <div class="testimonial-author-detail">Pernikahan, Mei 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duplicate for seamless loop -->
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Undangannya cantik banget! Tamu-tamu pada kagum dan banyak yang tanya bikinnya di mana. Pelayanannya juga ramah dan responsif. Highly recommended!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-author-name">Ayu &amp; Reza</div>
+            <div class="testimonial-author-detail">Pernikahan, Desember 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Prosesnya gampang banget, tinggal kirim data langsung jadi. Desainnya mewah tapi harganya sangat terjangkau. Puas banget sama hasilnya!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#c9a84c,#e8a8b8)">R</div>
+          <div>
+            <div class="testimonial-author-name">Rina &amp; Dimas</div>
+            <div class="testimonial-author-detail">Pernikahan, Januari 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Fitur RSVP-nya sangat membantu! Jadi tau pasti berapa tamu yang hadir. Countdown timer-nya juga keren, bikin makin excited nunggu hari H!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#7b8fc9,#c9a84c)">F</div>
+          <div>
+            <div class="testimonial-author-name">Fitri &amp; Arman</div>
+            <div class="testimonial-author-detail">Pernikahan, Februari 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Revisinya cepet dan sabar banget ngikutin request saya yang banyak haha. Hasilnya luar biasa, semua tamu bilang undangannya paling keren!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#e8a8b8,#7bc9a8)">S</div>
+          <div>
+            <div class="testimonial-author-name">Sari &amp; Bagas</div>
+            <div class="testimonial-author-detail">Pernikahan, Maret 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Musiknya pas banget sama tema undangan kami yang romantis. Banyak tamu yang terharu waktu buka undangannya. Terima kasih Print Memorie's!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#a87bc9,#c9a84c)">N</div>
+          <div>
+            <div class="testimonial-author-name">Nadya &amp; Farhan</div>
+            <div class="testimonial-author-detail">Pernikahan, April 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Lebih hemat dan praktis dari undangan cetak biasa. Bisa dibagikan lewat WA dengan mudah. Link-nya masih aktif sampai sekarang, seneng banget!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:linear-gradient(135deg,#c9a84c,#7b8fc9)">D</div>
+          <div>
+            <div class="testimonial-author-name">Dewi &amp; Eko</div>
+            <div class="testimonial-author-detail">Pernikahan, Mei 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FAQ
+══════════════════════════════════ -->
+<section id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="faq-layout">
+      <div class="faq-aside fade-left">
+        <span class="section-tag">FAQ</span>
+        <h2 id="faq-title">
+          Pertanyaan yang<br />
+          <span class="text-gold">Sering Ditanyakan</span>
+        </h2>
+        <div class="gold-divider gold-divider-left"></div>
+        <p>Punya pertanyaan lain? Jangan ragu untuk langsung menghubungi kami, kami siap membantu!</p>
+        <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20punya%20pertanyaan"
+           target="_blank" rel="noopener noreferrer"
+           class="faq-contact-prompt"
+           id="faq-wa-btn">
+          💬 Tanya Langsung via WA
+        </a>
+      </div>
+
+      <div class="faq-list fade-right">
+        <div class="faq-item">
+          <div class="faq-question" id="faq-q1">
+            Berapa lama proses pembuatan undangan?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Proses pembuatan undangan memakan waktu 1-3 hari kerja setelah semua data diterima. Untuk paket Premium dengan desain custom, bisa membutuhkan 3-5 hari kerja. Kami akan selalu mengkonfirmasi estimasi waktu sebelum memulai.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" id="faq-q2">
+            Apakah link undangan akan aktif selamanya?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Ya! Semua paket mendapatkan link undangan yang aktif seumur hidup (selama layanan kami beroperasi). Tamu bisa membuka undangan kapan saja, bahkan setelah acara selesai sebagai kenangan.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" id="faq-q3">
+            Bagaimana cara pembayarannya?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Kami menerima pembayaran melalui transfer bank (BCA, Mandiri, BNI, BRI), e-wallet (OVO, GoPay, DANA), dan bisa juga melalui Shopee. Pembayaran dilakukan di awal sebelum proses pengerjaan dimulai.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" id="faq-q4">
+            Bisa request revisi berapa kali?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Paket Basic mendapatkan 2x revisi, paket Standard 5x revisi, dan paket Premium mendapatkan revisi tidak terbatas. Revisi mencakup perubahan teks, foto, dan detail acara.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" id="faq-q5">
+            Apakah bisa menggunakan foto pre-wedding sendiri?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Tentu bisa! Anda bisa mengirimkan foto pre-wedding Anda sendiri yang akan ditampilkan di galeri undangan. Paket Standard menampung hingga 10 foto, dan paket Premium hingga 20+ foto.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" id="faq-q6">
+            Apakah ada garansi uang kembali?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Kami tidak menyediakan refund setelah proses pengerjaan dimulai, namun kami berkomitmen untuk terus merevisi hingga Anda benar-benar puas dengan hasilnya. Kepuasan pelanggan adalah prioritas utama kami.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT
+══════════════════════════════════ -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="contact-bg-glow"></div>
+  <div class="container">
+    <div class="contact-header fade-up">
+      <span class="section-tag">Hubungi Kami</span>
+      <h2 class="section-title" id="contact-title">
+        Siap Membuat Undangan<br />
+        <span class="text-gold">Impian Anda?</span>
+      </h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Hubungi kami melalui platform yang paling nyaman untuk Anda. Kami selalu siap membantu!
+      </p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20undangan%20digital%20%F0%9F%92%8D"
+         target="_blank" rel="noopener noreferrer"
+         class="contact-card contact-card-wa fade-up delay-1"
+         id="contact-wa-card">
+        <div class="contact-icon-wrap">
+          <span style="font-size:2rem">💬</span>
+        </div>
+        <h3>WhatsApp</h3>
+        <p>Chat langsung, respons cepat, konsultasi gratis!</p>
+        <span class="contact-handle">+62 812-3456-7890</span>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/printmemories"
+         target="_blank" rel="noopener noreferrer"
+         class="contact-card contact-card-ig fade-up delay-2"
+         id="contact-ig-card">
+        <div class="contact-icon-wrap">
+          <span style="font-size:2rem">📸</span>
+        </div>
+        <h3>Instagram</h3>
+        <p>Lihat portofolio terbaru dan update tema terbaru kami.</p>
+        <span class="contact-handle">@printmemories</span>
+      </a>
+
+      <!-- Shopee -->
+      <a href="https://shopee.co.id/printmemories"
+         target="_blank" rel="noopener noreferrer"
+         class="contact-card contact-card-shopee fade-up delay-3"
+         id="contact-shopee-card">
+        <div class="contact-icon-wrap">
+          <span style="font-size:2rem">🛒</span>
+        </div>
+        <h3>Shopee</h3>
+        <p>Beli dengan aman melalui toko resmi kami di Shopee.</p>
+        <span class="contact-handle">Print Memorie's</span>
+      </a>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="fade-up" style="margin-top:60px;text-align:center;background:linear-gradient(135deg,#1e1806,#2a2010);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:48px 32px;">
+      <p style="font-family:var(--font-script);font-size:2.2rem;color:var(--gold);margin-bottom:8px;">Mulai Hari Ini</p>
+      <h3 style="font-family:var(--font-heading);font-size:1.6rem;font-weight:700;margin-bottom:12px;">
+        Jadikan Hari Spesial Anda <span class="text-gold">Tak Terlupakan</span>
+      </h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;">
+        Setiap pernikahan adalah cerita cinta yang unik. Biarkan kami membantu menceritakannya dengan cara yang paling indah.
+      </p>
+      <a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20membuat%20undangan%20digital%20%F0%9F%92%8D"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-gold"
+         id="contact-final-cta">
+        💍 Mulai Konsultasi Gratis
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <span class="nav-logo-script">Print Memorie's</span>
+        <span class="nav-logo-sub" style="font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);">Undangan Pernikahan Digital</span>
+        <p>Studio undangan pernikahan digital premium yang menghadirkan kenangan indah melalui teknologi dan desain.</p>
+        <div class="footer-socials">
+          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="WhatsApp" id="footer-wa">💬</a>
+          <a href="https://instagram.com/printmemories" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram" id="footer-ig">📸</a>
+          <a href="https://shopee.co.id/printmemories" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Shopee" id="footer-shopee">🛒</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="#about">Tentang Kami</a></li>
+          <li><a href="#features">Fitur Unggulan</a></li>
+          <li><a href="#portfolio">Portofolio</a></li>
+          <li><a href="#how-it-works">Cara Pesan</a></li>
+          <li><a href="#pricing">Harga</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Paket</h4>
+        <ul>
+          <li><a href="#pricing">Paket Basic — Rp 75K</a></li>
+          <li><a href="#pricing">Paket Standard — Rp 120K</a></li>
+          <li><a href="#pricing">Paket Premium — Rp 200K</a></li>
+          <li><a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">Custom Request</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <ul>
+          <li><a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a></li>
+          <li><a href="https://instagram.com/printmemories" target="_blank" rel="noopener noreferrer">📸 Instagram</a></li>
+          <li><a href="https://shopee.co.id/printmemories" target="_blank" rel="noopener noreferrer">🛒 Shopee</a></li>
+          <li><a href="#faq">❓ FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Print Memorie's. All rights reserved. Dibuat dengan 💛 untuk setiap pasangan.</p>
+      <div class="footer-bottom-links">
+        <a href="#hero">Privacy Policy</a>
+        <a href="#hero">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════
+     FLOATING BUTTON
+══════════════════════════════════ -->
+<a href="https://wa.me/6281234567890?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20memesan%20undangan%20digital%20%F0%9F%92%8D"
+   target="_blank" rel="noopener noreferrer"
+   class="float-wa"
+   id="float-wa-btn"
+   title="Chat via WhatsApp"
+   aria-label="Chat via WhatsApp">
+  💬
+  <span class="float-wa-tooltip">Chat via WhatsApp</span>
+</a>
+
+<script src="app.js"></script>
+</body>
+</html>

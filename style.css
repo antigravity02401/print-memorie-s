@@ -1687,10 +1687,11 @@ footer {
 .music-player {
   position: fixed;
   bottom: 100px;
-  left: 24px;
+  right: 24px;
   z-index: 9999;
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
   gap: 10px;
   pointer-events: none;
 }
@@ -1854,7 +1855,7 @@ footer {
   border: 1px solid rgba(201, 161, 74, 0.3);
   white-space: nowrap;
   opacity: 0;
-  transform: translateX(-10px);
+  transform: translateX(10px);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
@@ -1868,7 +1869,7 @@ footer {
 @media (max-width: 640px) {
   .music-player {
     bottom: 90px;
-    left: 16px;
+    right: 16px;
   }
   .music-btn {
     width: 46px;

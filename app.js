@@ -209,87 +209,169 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 100);
 
-  /* ─── Background Music Player ──────────────── */
-  const bgMusic    = document.getElementById('bgMusic');
+  /* ─── Background Music Player (Web Audio API) ── */
   const musicBtn   = document.getElementById('musicBtn');
   const musicIcon  = document.getElementById('musicIcon');
   const musicLabel = document.getElementById('musicLabel');
 
-  if (bgMusic && musicBtn) {
-    let isPlaying = false;
-    bgMusic.volume = 0.35;
+  if (musicBtn) {
 
-    // Show label briefly on page load
-    setTimeout(() => {
-      musicLabel.classList.add('visible');
-      setTimeout(() => musicLabel.classList.remove('visible'), 3500);
-    }, 1500);
+    // ── Romantic wedding chord progression (MIDI notes) ─────────
+    // C  Am  F  G  →  romantic Indonesian wedding feel
+    const progression = [
+      [48, 52, 55, 60, 64],   // C  major  : C3 E3 G3 C4 E4
+      [45, 48, 52, 57, 60],   // A  minor  : A2 C3 E3 A3 C4
+      [41, 45, 48, 53, 57],   // F  major  : F2 A2 C3 F3 A3
+      [43, 47, 50, 55, 59],   // G  major  : G2 B2 D3 G3 B3
+    ];
 
-    // Try autoplay; browsers usually block it until user gesture
-    const tryAutoplay = () => {
-      bgMusic.play().then(() => {
-        setPlaying(true);
-      }).catch(() => {
-        // Will be played on first user gesture
-        setPlaying(false);
+    const BPM        = 60;    // slow, romantic
+    const SPB        = 60 / BPM;   // seconds per beat
+    const NOTE_DUR   = SPB * 1.8;  // each note duration
+    const NOTE_GAP   = SPB * 0.55; // gap between arpeggio notes
+    const VOL_TARGET = 0.22;
+
+    let audioCtx    = null;
+    let masterGain  = null;
+    let delayNode   = null;
+    let fbGain      = null;
+    let isPlaying   = false;
+    let schedTimer  = null;
+    let nextTime    = 0;
+    let progIdx     = 0;
+    let noteIdx     = 0;
+
+    function midiToHz(midi) {
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    }
+
+    function initAudio() {
+      if (audioCtx) return;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AC();
+
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0;
+      masterGain.connect(audioCtx.destination);
+
+      // Warm reverb via feedback delay
+      delayNode = audioCtx.createDelay(2.5);
+      delayNode.delayTime.value = 0.38;
+
+      fbGain = audioCtx.createGain();
+      fbGain.gain.value = 0.38;
+
+      const delayFilter = audioCtx.createBiquadFilter();
+      delayFilter.type = 'lowpass';
+      delayFilter.frequency.value = 1800;
+
+      delayNode.connect(delayFilter);
+      delayFilter.connect(fbGain);
+      fbGain.connect(delayNode);
+      fbGain.connect(masterGain);
+    }
+
+    function playNote(midi, time) {
+      const freq = midiToHz(midi);
+
+      // Two oscillators slightly detuned → richer piano-like tone
+      [0, 1.5].forEach((detune, i) => {
+        const osc  = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = i === 0 ? 'sine' : 'triangle';
+        osc.frequency.value = freq * Math.pow(2, detune / 1200);
+
+        // Envelope: soft attack, slow release
+        gain.gain.setValueAtTime(0, time);
+        gain.gain.linearRampToValueAtTime(i === 0 ? 0.28 : 0.12, time + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + NOTE_DUR);
+
+        osc.connect(gain);
+        gain.connect(masterGain);
+        gain.connect(delayNode);   // send to reverb
+
+        osc.start(time);
+        osc.stop(time + NOTE_DUR + 0.3);
       });
-    };
 
-    // Play on first user interaction if autoplay blocked
-    const onFirstInteraction = () => {
-      if (!isPlaying) {
-        bgMusic.play().then(() => {
-          setPlaying(true);
-        }).catch(() => {});
+      // Subtle harmonic overtone (octave above)
+      const osc2  = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.value = freq * 2;
+      gain2.gain.setValueAtTime(0, time);
+      gain2.gain.linearRampToValueAtTime(0.04, time + 0.05);
+      gain2.gain.exponentialRampToValueAtTime(0.001, time + NOTE_DUR * 0.6);
+      osc2.connect(gain2);
+      gain2.connect(masterGain);
+      osc2.start(time);
+      osc2.stop(time + NOTE_DUR);
+    }
+
+    function scheduleNotes() {
+      const ahead = 0.25;
+      while (nextTime < audioCtx.currentTime + ahead) {
+        const chord  = progression[progIdx];
+        const midi   = chord[noteIdx];
+        playNote(midi, nextTime);
+
+        nextTime += NOTE_GAP;
+        noteIdx++;
+        if (noteIdx >= chord.length) {
+          noteIdx = 0;
+          progIdx = (progIdx + 1) % progression.length;
+          // Extra pause between chord changes
+          nextTime += SPB * 0.4;
+        }
       }
-      document.removeEventListener('click', onFirstInteraction);
-      document.removeEventListener('touchstart', onFirstInteraction);
-      document.removeEventListener('scroll', onFirstInteraction);
-    };
-
-    document.addEventListener('click', onFirstInteraction, { once: true });
-    document.addEventListener('touchstart', onFirstInteraction, { once: true });
-    document.addEventListener('scroll', onFirstInteraction, { once: true });
-
-    // Fade in music
-    function fadeIn(audio, targetVol, duration) {
-      audio.volume = 0;
-      const steps = 40;
-      const increment = targetVol / steps;
-      const interval = duration / steps;
-      const timer = setInterval(() => {
-        if (audio.volume + increment >= targetVol) {
-          audio.volume = targetVol;
-          clearInterval(timer);
-        } else {
-          audio.volume += increment;
-        }
-      }, interval);
+      if (isPlaying) {
+        schedTimer = setTimeout(scheduleNotes, 80);
+      }
     }
 
-    // Fade out music
-    function fadeOut(audio, duration, cb) {
-      const startVol = audio.volume;
-      const steps = 40;
-      const decrement = startVol / steps;
-      const interval = duration / steps;
-      const timer = setInterval(() => {
-        if (audio.volume - decrement <= 0) {
-          audio.volume = 0;
-          audio.pause();
-          clearInterval(timer);
-          if (cb) cb();
-        } else {
-          audio.volume -= decrement;
-        }
-      }, interval);
+    function startMusic() {
+      initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      isPlaying = true;
+      nextTime  = audioCtx.currentTime + 0.1;
+      progIdx   = 0;
+      noteIdx   = 0;
+
+      // Fade in master volume
+      masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+      masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(VOL_TARGET, audioCtx.currentTime + 3);
+
+      scheduleNotes();
+      setUIPlaying(true);
+
+      musicLabel.textContent = '♪ Wedding Melody';
+      musicLabel.classList.add('visible');
+      setTimeout(() => musicLabel.classList.remove('visible'), 3000);
     }
 
-    function setPlaying(playing) {
-      isPlaying = playing;
+    function stopMusic() {
+      isPlaying = false;
+      clearTimeout(schedTimer);
+
+      // Fade out
+      masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+
+      setUIPlaying(false);
+
+      musicLabel.textContent = '♪ Musik dimatikan';
+      musicLabel.classList.add('visible');
+      setTimeout(() => musicLabel.classList.remove('visible'), 2000);
+    }
+
+    function setUIPlaying(playing) {
       if (playing) {
-        musicIcon.classList.remove('paused');
         musicIcon.classList.add('playing');
+        musicIcon.classList.remove('paused');
         musicBtn.classList.remove('paused');
       } else {
         musicIcon.classList.remove('playing');
@@ -298,28 +380,39 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Toggle play/pause on button click
+    // ── Button click toggle ───────────────────────────────────
     musicBtn.addEventListener('click', () => {
       if (isPlaying) {
-        fadeOut(bgMusic, 800);
-        setPlaying(false);
-        musicLabel.classList.add('visible');
-        musicLabel.textContent = '♪ Musik dimatikan';
-        setTimeout(() => musicLabel.classList.remove('visible'), 2000);
+        stopMusic();
       } else {
-        bgMusic.play().then(() => {
-          fadeIn(bgMusic, 0.35, 1000);
-          setPlaying(true);
-          musicLabel.classList.add('visible');
-          musicLabel.textContent = '♪ Romantic Serenade';
-          setTimeout(() => musicLabel.classList.remove('visible'), 2500);
-        }).catch(() => {});
+        startMusic();
       }
     });
 
-    // Initial state: show paused until autoplay resolves
-    setPlaying(false);
-    setTimeout(tryAutoplay, 500);
+    // ── Show label hint on load ───────────────────────────────
+    setTimeout(() => {
+      musicLabel.classList.add('visible');
+      setTimeout(() => musicLabel.classList.remove('visible'), 3500);
+    }, 1800);
+
+    // ── Autoplay on FIRST user interaction ───────────────────
+    // (required by all modern browsers incl. Safari)
+    const onFirstGesture = () => {
+      startMusic();
+      document.removeEventListener('click',      onFirstGesture);
+      document.removeEventListener('touchstart', onFirstGesture);
+      document.removeEventListener('scroll',     onFirstGesture);
+      document.removeEventListener('keydown',    onFirstGesture);
+    };
+
+    document.addEventListener('click',      onFirstGesture, { once: true });
+    document.addEventListener('touchstart', onFirstGesture, { once: true });
+    document.addEventListener('scroll',     onFirstGesture, { once: true, passive: true });
+    document.addEventListener('keydown',    onFirstGesture, { once: true });
+
+    // Default state: paused icon
+    setUIPlaying(false);
   }
 
 });
+

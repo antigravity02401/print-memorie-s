@@ -210,6 +210,18 @@ ul { list-style: none; }
 
 .nav-logo {
   display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-logo-text {
+  display: flex;
   flex-direction: column;
   line-height: 1;
 }

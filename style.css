@@ -1742,6 +1742,19 @@ footer {
   }
   
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  
+  .contact-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 4px; 
+    max-width: 100%;
+  }
+  .contact-card { padding: 12px 6px; }
+  .contact-icon-wrap { width: 36px; height: 36px; margin: 0 auto 8px; border-radius: 12px; }
+  .contact-icon-wrap span { font-size: 1rem !important; }
+  .contact-card h3 { font-size: 0.6rem; margin-bottom: 2px; }
+  .contact-card p { display: none; }
+  .contact-handle { font-size: 0.55rem; }
+
   .footer-main { grid-template-columns: 1fr; }
   .hero-btns { flex-direction: column; }
   .hero-btns .btn { width: 100%; justify-content: center; }

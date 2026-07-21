@@ -1,0 +1,23 @@
+{
+  "name": "print-memorie's",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antigravity02401/print-memorie-s.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antigravity02401/print-memorie-s/issues"
+  },
+  "homepage": "https://github.com/antigravity02401/print-memorie-s#readme",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
+  }
+}

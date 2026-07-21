@@ -448,4 +448,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ─── Fetch Testimonials ───────────────────────── */
+  const testimonialsTrack = document.getElementById('testimonialsTrack');
+  if (testimonialsTrack) {
+    async function loadTestimonials() {
+      try {
+        const response = await fetch('/api/get-testimonials');
+        if (!response.ok) throw new Error('Network error');
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          testimonialsTrack.innerHTML = '';
+          
+          // Duplicate data to make infinite scrolling seamless
+          const renderData = [...data, ...data];
+          
+          renderData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+            
+            const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+            const dateStr = new Date(item.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long' });
+            const avatarInitial = item.name ? item.name.charAt(0).toUpperCase() : 'U';
+            
+            card.innerHTML = `
+              <div class="testimonial-stars">${stars}</div>
+              <p class="testimonial-text">"${item.message}"</p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--gold),#e8a8b8)">
+                  ${avatarInitial}
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-author-name">${item.name}</div>
+                  <div class="testimonial-author-detail">Testimoni, ${dateStr}</div>
+                </div>
+              </div>
+            `;
+            testimonialsTrack.appendChild(card);
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load testimonials:', error);
+      }
+    }
+    
+    loadTestimonials();
+  }
+
 });

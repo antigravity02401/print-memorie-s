@@ -1159,6 +1159,11 @@ ul { list-style: none; }
   color: var(--text-muted);
 }
 
+.pricing-feature-icon.peringatan {
+  background: rgba(220, 38, 38, 0.2);
+  color: #ef4444;
+}
+
 /* ════════════════════════════════════
    STATISTICS
 ════════════════════════════════════ */

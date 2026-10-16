@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const SPB        = 60 / BPM;   // seconds per beat
     const NOTE_DUR   = SPB * 1.8;  // each note duration
     const NOTE_GAP   = SPB * 0.55; // gap between arpeggio notes
-    const VOL_TARGET = 0.22;
+    const VOL_TARGET = 0.44; // 200% dari volume awal (0.22)
 
     let audioCtx    = null;
     let masterGain  = null;

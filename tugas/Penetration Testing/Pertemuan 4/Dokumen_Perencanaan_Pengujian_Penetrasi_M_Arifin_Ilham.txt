@@ -1,0 +1,253 @@
+KEMENTERIAN PENDIDIKAN, TINGGI, SAINS, DAN TEKNOLOGI
+POLITEKNIK NEGERI BENGKALIS
+Jalan Bathin Alam, Sungai Alam, Bengkalis, Riau 28711
+Telepon: (+62766) 24566 | Fax: (+62766) 800 1000
+
+================================================================
+         DOKUMEN PERENCANAAN PENGUJIAN PENETRASI
+================================================================
+
+Nama Mahasiswa    : M. Arifin Ilham
+NIM               : 6404240008
+Mata Kuliah       : Penetration Testing (KSI251522)
+Program Studi     : Sarjana Terapan Keamanan Sistem Informasi
+Dosen Pengampu    : Nurmi Hidayasari
+Target Pengujian  : nyamankos -- https://nyamankos.ours.web.id
+Rujukan RoE       : RoE Pentest KSI 5A 2026 -- ditandatangani 25/09/2026
+Tanggal Penyusunan: 01 Oktober 2026
+Kerangka Kerja    : PTES (Penetration Testing Execution Standard) -- 7 fase
+
+================================================================
+1. PRE-ENGAGEMENT INTERACTIONS
+================================================================
+(Fase ini disesuaikan dengan RoE yang sudah ditandatangani.)
+
+Tujuan Pengujian  : Mengidentifikasi kerentanan kategori OWASP Top 10 pada
+                    aplikasi nyamankos (https://nyamankos.ours.web.id) sebelum
+                    sistem diserahterimakan kepada mitra, sekaligus memenuhi
+                    capaian pembelajaran Mata Kuliah Penetration Testing.
+
+Ruang Lingkup     : HANYA lapisan aplikasi web (HTTP/HTTPS).
+                    Tidak mencakup lapisan jaringan/infrastruktur/server.
+                    (Dikutip dari RoE Bagian 4)
+
+                    Kategori yang tercakup:
+                    - Input validation & injection (SQL Injection, XSS, command injection)
+                    - Autentikasi & manajemen sesi
+                    - Otorisasi & kontrol akses (IDOR, privilege escalation akun)
+                    - Konfigurasi keamanan dari luar (security header, endpoint terekspos)
+                    - Alur bisnis dan logika aplikasi
+
+Batasan (Exclusion):
+                    - Port scanning / pemindaian jaringan apapun (termasuk Nmap) -- DILARANG
+                    - Eksploitasi lanjutan level OS/server setelah dapat akses shell -- DIHENTIKAN
+                    - Aksi destruktif ireversibel: menghapus/mengubah data permanen
+                    - Social engineering terhadap pihak di luar penanda tangan RoE
+                    - Menyebarluaskan data/kredensial di luar keperluan akademik
+                    (Dikutip dari RoE Bagian 5 -- Exclusion List)
+
+Jadwal Keseluruhan: Minggu 3 s.d. Minggu 12 mengikuti jadwal praktikum
+                    (Dikutip dari RoE Bagian 8)
+
+Kontak Eskalasi   : Dosen Pengampu: Nurmi Hidayasari (0811-7500-891)
+                    Tim Pengembang: Revis Irwan Gea (0812-6534-2848)
+                    (Dikutip dari RoE Bagian 6)
+
+================================================================
+2. INTELLIGENCE GATHERING
+================================================================
+(Teknik bersifat pasif/berbasis HTTP publik -- tidak menyentuh port di luar 80/443)
+
+Teknik yang direncanakan:
+  [v] WHOIS / pencarian registrasi domain
+  [v] DNS lookup (dig/nslookup) -- terbatas, tanpa port scan
+  [v] Google dorking (site:nyamankos.ours.web.id)
+  [v] Pemeriksaan header HTTP (curl -I / curl -v)
+  [v] Deteksi teknologi (WhatWeb / Wappalyzer)
+  [v] Pemeriksaan robots.txt dan sitemap.xml
+  [v] Inspeksi DevTools browser (source JS, cookies, network tab)
+
+Sumber informasi yang ditargetkan:
+  - Teknologi stack (framework, versi CMS, server header)
+  - Endpoint/path tersembunyi yang tidak sengaja terekspos
+  - Informasi kontak publik, subdomain, dan metadata
+  - Cookie flags, security header (X-Frame-Options, CSP, HSTS, dll.)
+
+Estimasi waktu: 2-3 jam (Minggu 5)
+
+================================================================
+3. THREAT MODELING
+================================================================
+(Identifikasi fitur/aset paling bernilai atau berisiko untuk diprioritaskan)
+
+Fitur / Aset               | Alasan Prioritas                                   | Prioritas
+---------------------------|----------------------------------------------------|-----------
+Form Login / Autentikasi   | Pintu masuk utama; rentan brute force, SQLi, bypass|    T
+Form Pendaftaran/Registrasi| Rentan injeksi data, Stored XSS, validasi lemah    |    T
+Halaman Pencarian Kos      | Parameter URL rentan SQL Injection & Reflected XSS |    T
+Manajemen Profil Pengguna  | Rentan IDOR -- akses data pengguna lain via id      |    T
+Panel Admin (jika ada)     | Eskalasi privilege; akses tidak terotorisasi        |    T
+Proses Booking/Pemesanan   | Business Logic -- manipulasi harga/kuantitas        |    S
+Endpoint API / AJAX        | Bisa terekspos data sensitif tanpa autentikasi      |    S
+Halaman Ulasan/Komentar    | Rentan Stored XSS                                   |    S
+
+Prioritas: T = Tinggi, S = Sedang, R = Rendah
+
+================================================================
+4. VULNERABILITY ANALYSIS
+================================================================
+
+4.1 Scanning
+------------
+Kategori OWASP WSTG yang ditargetkan:
+  [v] Information Gathering
+  [v] Configuration and Deployment Management Testing
+  [v] Identity Management Testing
+  [v] Authentication Testing
+  [v] Authorization Testing
+  [v] Session Management Testing
+  [v] Input Validation Testing (SQL Injection, XSS, dsb.)
+  [v] Error Handling & Cryptography
+  [v] Business Logic Testing
+  [ ] Client-Side Testing
+
+Metode scanning yang dipakai:
+  [ ] Automated scanning penuh (OpenVAS/Nessus)
+  [v] Active Scan berbasis HTTP (Burp Suite Scanner / OWASP ZAP Active Scan)
+  [v] Manual testing per test case WSTG
+
+Tools yang dipakai:
+  - Burp Suite Community (intercepting proxy, Repeater, Intruder)
+  - OWASP ZAP (Active Scan mode HTTP)
+  - curl (pemeriksaan header HTTP)
+  - WhatWeb (deteksi teknologi)
+  - Browser DevTools (inspeksi request, cookie, source)
+
+Tools yang TIDAK dipakai (batasan RoE):
+  Nmap, Nessus/OpenVAS terhadap target nyata, dan semua tools pemindai jaringan.
+
+4.2 Assessment (Verifikasi Temuan)
+------------------------------------
+Setiap temuan wajib diverifikasi manual sebelum dianggap kerentanan sah.
+
+Temuan Scanner           | Kategori WSTG          | Verifikasi Manual       | CVE/CWE
+-------------------------|------------------------|-------------------------|---------
+(diisi setelah scanning) | (kategori)             | [Confirmed/False Pos.]  | [CWE-89]
+(diisi setelah scanning) | (kategori)             | [Confirmed/False Pos.]  | [CWE-79]
+(diisi setelah scanning) | (kategori)             | [Confirmed/False Pos.]  | [CWE-287]
+
+================================================================
+5. EXPLOITATION
+================================================================
+
+Kategori Kerentanan      | Teknik / Payload Contoh                     | Tools
+-------------------------|---------------------------------------------|-------------------
+SQL Injection            | UNION-based / boolean-based blind pada       | sqlmap,
+                         | parameter id atau search                     | Burp Repeater
+Cross-Site Scripting     | Reflected XSS via parameter pencarian,       | Burp Suite,
+(XSS)                    | <script>alert(document.cookie)</script>      | payload manual
+Broken Authentication    | Uji kredensial umum form login secara        | Burp Intruder
+                         | terbatas (rate-limited, bukan brute force)   | (terbatas)
+Broken Access Control    | Manipulasi parameter id (user_id, booking_id)| Burp Repeater,
+/ IDOR                   | untuk akses data akun lain                   | param tampering
+Session Management       | Uji token sesi setelah logout;               | Burp Suite
+                         | apakah token dapat ditebak/diprediksi        | (cookie inspect)
+Business Logic           | Manipulasi nilai harga/kuantitas booking     | Burp Repeater,
+                         | (mis. kuantitas negatif) untuk uji validasi  | manual
+
+Tools eksploitasi yang dipakai:
+  [v] sqlmap (validasi & eksploitasi SQL Injection)
+  [v] Burp Suite Intruder/Repeater (payload manual & terautomasi)
+  [v] OWASP ZAP (manual attack mode)
+  [v] Payload/skrip kustom (XSS payload, IDOR parameter tampering)
+
+Tools yang TIDAK dipakai (batasan RoE):
+  Metasploit modul jaringan/OS, exploit biner/binary payload, dan semua
+  tools yang menyasar lapisan OS/server.
+
+Kriteria temuan tervalidasi:
+  Berhasil mengeksekusi payload dan mengonfirmasi dampaknya secara nyata
+  (data terekspos, sesi terbajak, atau akses tidak terotorisasi terbukti).
+
+Kriteria BERHENTI (wajib, tidak dapat diubah):
+  Begitu command injection atau kerentanan lain terbukti memberi akses
+  tingkat OS/server, aktivitas DIHENTIKAN dan segera dilaporkan sesuai
+  prosedur eskalasi RoE -- tidak dieksplorasi lebih lanjut.
+
+================================================================
+6. POST-EXPLOITATION
+================================================================
+
+Penilaian dampak dilakukan melalui analisis, bukan dengan aktivitas
+lanjutan yang melampaui exclusion list RoE (tanpa lateral movement).
+
+Jenis data yang berpotensi terekspos:
+  - Data pribadi pengguna (nama, alamat, nomor telepon, email)
+  - Data kredensial (username/password hash)
+  - Data transaksi/booking kos
+  - Informasi internal aplikasi (struktur database, path server)
+
+Dampak bisnis jika dieksploitasi pihak luar:
+  - Kebocoran data pengguna --> pelanggaran privasi dan kepercayaan
+  - Manipulasi data booking --> kerugian finansial dan operasional
+  - Eskalasi akses admin --> kendali penuh atas sistem
+  - Downtime aplikasi --> gangguan layanan mitra
+
+================================================================
+7. REPORTING
+================================================================
+
+Struktur laporan akhir yang akan diikuti:
+  - Ringkasan Eksekutif
+  - Metodologi (rujuk kerangka PTES ini)
+  - Temuan per kategori WSTG, lengkap dengan tingkat risiko (CVSS) dan bukti
+  - Rekomendasi mitigasi
+
+Kriteria keberhasilan pelaporan:
+  Seluruh kategori WSTG yang ditargetkan pada Bagian 4 telah diuji dan
+  dilaporkan, terlepas dari jumlah temuan yang ditemukan.
+
+================================================================
+8. RENCANA KERJA MINGGUAN
+================================================================
+
+Mg    | Fase PTES               | Aktivitas                              | Lingkungan
+------|-------------------------|----------------------------------------|-----------
+  5   | Intelligence Gathering  | WHOIS, DNS lookup pasif, Google        | Real
+      |                         | dorking, curl header check, WhatWeb    |
+  6   | Intelligence Gathering  | Nmap: host discovery, port scan, OS    | Dummy
+      |                         | fingerprint -- target nyata tidak       |
+      |                         | disentuh                               |
+  7   | Vulnerability Analysis  | OpenVAS/Nessus full scan --> Dummy;    | Kedua
+      | (Scanning)              | Burp Suite/ZAP Active Scan --> Real    |
+  9   | Vuln. Analysis &        | Verifikasi temuan manual per WSTG;     | Kedua
+      | Exploitation (awal)     | Eksploitasi app-layer --> Real;        |
+      |                         | Kill-chain penuh --> Dummy             |
+ 10-12| Exploitation (lanjutan) | OWASP Top10/WSTG: SQL Injection, XSS, | Real
+      |                         | autentikasi, kontrol akses, IDOR,      |
+      |                         | Business Logic, Session Management     |
+  13  | Post-Exploitation       | Cek TLS/cipher (testssl.sh) --> Real;  | Kedua
+      |                         | Analisis dampak temuan                 |
+  14  | Reporting               | Penyusunan laporan: Ringkasan,         | -
+      |                         | Metodologi, Temuan & Bukti, CVSS       |
+  15  | Reporting (Final)       | Finalisasi laporan, rekomendasi,       | -
+      |                         | presentasi akhir                       |
+
+================================================================
+9. PERSETUJUAN
+================================================================
+Dengan menandatangani dokumen ini, dosen pengampu menyatakan telah
+memverifikasi kesesuaian rencana ini dengan RoE yang berlaku.
+(Lampirkan RoE yang sudah diperbaiki dan ditandatangani.)
+
+        Mahasiswa                              Dosen Pengampu
+
+
+  (_________________________)            (_________________________)
+  M. Arifin Ilham                         Nama: Nurmi Hidayasari
+  NIM: 6404240008
+  Tanggal: 01 Oktober 2026               Tanggal:
+
+Catatan:
+
+================================================================

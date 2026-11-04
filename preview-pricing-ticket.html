@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview — Ticket Pricing Card | Print Memorie's</title>
+
+  <!-- Font dari project asli -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design tokens (sama dengan project) ── */
+    :root {
+      --gold:         #c9a84c;
+      --gold-light:   #e8c96d;
+      --gold-glow:    rgba(201, 168, 76, 0.45);
+      --gold-subtle:  rgba(201, 168, 76, 0.12);
+      --dark-1:       #080808;
+      --dark-2:       #111111;
+      --dark-3:       #1a1a1a;
+      --dark-4:       #222222;
+      --dark-5:       #2a2a2a;
+      --rose:         #c17b8a;
+      --rose-glow:    rgba(193, 123, 138, 0.4);
+      --white:        #ffffff;
+      --text-muted:   rgba(255,255,255,0.5);
+      --text-dim:     rgba(255,255,255,0.75);
+      --font-heading: 'Playfair Display', serif;
+      --font-body:    'Poppins', sans-serif;
+      --font-ticket:  'Space Grotesk', 'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--dark-1);
+      color: var(--white);
+      min-height: 100vh;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    /* ── Page header ── */
+    .preview-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .preview-header .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.35);
+      border-radius: 999px;
+      padding: 0.35em 1.1em;
+      margin-bottom: 1rem;
+    }
+    .preview-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .preview-header h1 span { color: var(--gold); }
+    .preview-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+    }
+    .preview-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201,168,76,.08);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+    }
+
+    /* ── Grid wrapper ── */
+    .pricing-preview-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* ═══════════════════════════════════════════
+       TICKET CARD — semua class diawali "tk-"
+       agar tidak bentrok dengan style.css asli
+    ═══════════════════════════════════════════ */
+    .tk-wrapper {
+      /* Token warna per paket — di-override per card */
+      --tk-bg:          #161618;
+      --tk-bg-stub:     #1e1e22;
+      --tk-accent:      var(--gold);
+      --tk-glow:        var(--gold-glow);
+      --tk-text:        #f8fafc;
+      --tk-muted:       rgba(255,255,255,0.45);
+
+      font-size: 10px;        /* seluruh em relatif ke sini → mudah scale */
+      perspective: 1000px;
+      display: inline-block;
+    }
+
+    .tk-card {
+      position: relative;
+      width: 23em;
+      font-family: var(--font-ticket);
+      color: var(--tk-text);
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.23,1,0.32,1),
+                  box-shadow  0.55s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,.8),
+                  0 0 0 1px rgba(255,255,255,.04);
+      filter: drop-shadow(0 0 12px rgba(0,0,0,.55));
+      cursor: pointer;
+    }
+
+    .tk-wrapper:hover .tk-card {
+      transform: rotateX(4deg) rotateY(-8deg) scale(1.03);
+      box-shadow: 18px 20px 50px rgba(0,0,0,.7),
+                  0 0 0 1px rgba(255,255,255,.08),
+                  -6px -6px 24px var(--tk-glow);
+    }
+
+    /* Glare overlay */
+    .tk-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 1em;
+      pointer-events: none;
+      background: linear-gradient(
+        115deg,
+        transparent 0%, transparent 38%,
+        rgba(255,255,255,.08) 43%,
+        rgba(255,255,255,.22) 50%,
+        rgba(255,255,255,.08) 57%,
+        transparent 62%, transparent 100%
+      );
+      background-size: 250% 250%;
+      background-position: 100% 100%;
+      transition: background-position 0.55s cubic-bezier(0.23,1,0.32,1);
+      mix-blend-mode: overlay;
+      z-index: 10;
+    }
+    .tk-wrapper:hover .tk-card::after { background-position: 0% 0%; }
+
+    /* ── Main ticket body ── */
+    .tk-main {
+      padding: 2em 2.2em;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at bottom left,  transparent 1em, var(--tk-bg) 1.05em),
+        radial-gradient(circle at bottom right, transparent 1em, var(--tk-bg) 1.05em);
+      background-size: 51% 100%;
+      background-position: bottom left, bottom right;
+      background-repeat: no-repeat;
+      border-top-left-radius:  1em;
+      border-top-right-radius: 1em;
+    }
+
+    /* Animated grid background */
+    .tk-main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,.1) 1px, transparent 1px);
+      background-size: 2em 2em;
+      opacity: .5;
+      pointer-events: none;
+      transform: perspective(400px) rotateX(18deg) scale(1.5);
+      animation: tk-grid 20s linear infinite;
+    }
+    @keyframes tk-grid {
+      from { background-position: 0 0; }
+      to   { background-position: 0 4em; }
+    }
+
+    /* Accent top bar */
+    .tk-main::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--tk-accent), transparent);
+      opacity: 0.7;
+    }
+
+    .tk-content { position: relative; z-index: 1; }
+
+    /* Header: logo + badge */
+    .tk-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.6em;
+    }
+
+    .tk-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      font-weight: 900;
+      font-size: 1.1em;
+      letter-spacing: .04em;
+      color: var(--white);
+    }
+    .tk-logo-icon {
+      font-size: 1.3em;
+      animation: tk-pulse 3s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 4px var(--tk-accent));
+    }
+    @keyframes tk-pulse {
+      from { filter: drop-shadow(0 0 2px var(--tk-accent)); }
+      to   { filter: drop-shadow(0 0 10px var(--tk-accent)) brightness(1.3); }
+    }
+
+    .tk-badge {
+      font-size: 0.58em;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--tk-accent);
+      border: 1px solid var(--tk-accent);
+      padding: 0.4em 0.8em;
+      border-radius: 999em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    /* Featured badge */
+    .tk-badge.featured {
+      background: var(--tk-accent);
+      color: var(--dark-1);
+    }
+
+    /* Plan name */
+    .tk-plan-name {
+      font-size: 2.6em;
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: var(--font-heading);
+      font-style: italic;
+    }
+
+    .tk-plan-sub {
+      color: var(--tk-muted);
+      font-size: 0.82em;
+      margin-bottom: 1.8em;
+      font-style: normal;
+    }
+
+    /* Detail grid: features */
+    .tk-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65em;
+      margin-bottom: 1.6em;
+    }
+    .tk-feat {
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      font-size: 0.95em;
+    }
+    .tk-feat-icon {
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7em;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+    .tk-feat-icon.yes  { background: rgba(201,168,76,.2); color: var(--gold-light); }
+    .tk-feat-icon.no   { background: rgba(255,255,255,.07); color: var(--tk-muted); }
+    .tk-feat-icon.warn { background: rgba(193,123,138,.15); color: var(--rose); }
+    .tk-feat-label.dimmed { color: var(--tk-muted); }
+
+    /* Perforation line */
+    .tk-perf {
+      position: relative;
+      height: 0;
+      border-top: 2px dashed rgba(255,255,255,.18);
+      margin: 0 -0.5em;
+    }
+    /* Notch circles */
+    .tk-perf::before,
+    .tk-perf::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.8em;
+      height: 1.8em;
+      border-radius: 50%;
+      background: var(--dark-1);
+    }
+    .tk-perf::before { left:  -1.8em; }
+    .tk-perf::after  { right: -1.8em; }
+
+    /* ── Stub ── */
+    .tk-stub {
+      padding: 1.6em 2.2em;
+      background:
+        radial-gradient(circle at top left,  transparent 1em, var(--tk-bg-stub) 1.05em),
+        radial-gradient(circle at top right, transparent 1em, var(--tk-bg-stub) 1.05em);
+      background-size: 51% 100%;
+      background-position: top left, top right;
+      background-repeat: no-repeat;
+      border-bottom-left-radius:  1em;
+      border-bottom-right-radius: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1em;
+    }
+
+    /* Barcode area */
+    .tk-barcode-wrap { display: flex; flex-direction: column; gap: 0.5em; }
+    .tk-barcode {
+      width: 9em;
+      height: 2.8em;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,.8) 0,   rgba(255,255,255,.8) 2px,
+        transparent 2px,          transparent 4px,
+        rgba(255,255,255,.8) 4px, rgba(255,255,255,.8) 5px,
+        transparent 5px,          transparent 8px,
+        rgba(255,255,255,.8) 8px, rgba(255,255,255,.8) 12px,
+        transparent 12px,         transparent 15px,
+        rgba(255,255,255,.8) 15px,rgba(255,255,255,.8) 16px,
+        transparent 16px,         transparent 18px
+      );
+      opacity: .65;
+    }
+    .tk-barcode-id {
+      font-family: monospace;
+      font-size: 0.65em;
+      color: var(--tk-muted);
+      letter-spacing: .15em;
+    }
+
+    /* Price display */
+    .tk-price-wrap { text-align: right; flex-shrink: 0; }
+    .tk-price-label {
+      font-size: 0.65em;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--tk-muted);
+      margin-bottom: 0.1em;
+    }
+    .tk-price-amount {
+      font-size: 2.2em;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--tk-accent);
+      text-shadow: 0 0 18px var(--tk-glow);
+      white-space: nowrap;
+    }
+    .tk-price-period {
+      font-size: 0.6em;
+      color: var(--tk-muted);
+    }
+
+    /* ── CTA Button (di luar ticket) ── */
+    .tk-cta-wrap {
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+    .tk-cta {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: .04em;
+      transition: all 0.3s ease;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      text-decoration: none;
+    }
+    .tk-cta:hover {
+      background: var(--gold);
+      color: var(--dark-1);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+    .tk-cta.gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--dark-1);
+      border-color: transparent;
+    }
+    .tk-cta.gold:hover {
+      box-shadow: 0 0 25px var(--gold-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ── Per-paket accent overrides ── */
+    /* Basic – gold biasa */
+    .tk-wrap-basic {
+      --tk-accent: #c9a84c;
+      --tk-glow:   rgba(201,168,76,.45);
+    }
+    /* Standard – gold terang + sedikit rose */
+    .tk-wrap-standard {
+      --tk-accent: #e8c96d;
+      --tk-glow:   rgba(232,201,109,.5);
+    }
+    /* Premium – rose gold */
+    .tk-wrap-premium {
+      --tk-accent: #c17b8a;
+      --tk-glow:   rgba(193,123,138,.45);
+    }
+    .tk-wrap-premium .tk-plan-name {
+      background: linear-gradient(135deg, #fff 0%, #e8a8b8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tk-wrap-premium .tk-price-amount {
+      color: var(--rose);
+      text-shadow: 0 0 18px var(--rose-glow);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .tk-wrapper { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ PAGE HEADER ═══ -->
+  <div class="preview-header">
+    <div class="badge">🎟️ Preview Komponen</div>
+    <h1>Ticket <span>Pricing Card</span></h1>
+    <p>Preview desain tiket untuk section Harga Print Memorie's. Hover kartu untuk melihat efek 3D.</p>
+    <div class="preview-note">
+      ⚠️ Ini halaman preview — belum diterapkan ke index.html
+    </div>
+  </div>
+
+  <!-- ═══ PRICING TICKET GRID ═══ -->
+  <div class="pricing-preview-grid">
+
+    <!-- ─── BASIC ─────────────────────── -->
+    <div class="tk-outer">
+      <div class="tk-wrapper tk-wrap-basic">
+        <div class="tk-card">
+
+          <!-- Main body -->
+          <div class="tk-main">
+            <div class="tk-content">
+
+              <!-- Header -->
+              <div class="tk-header">
+                <div class="tk-logo">
+                  <span class="tk-logo-icon">💌</span>
+                  Print Memorie's
+                </div>
+                <div class="tk-badge">Basic</div>
+              </div>
+
+              <!-- Plan name -->
+              <div class="tk-plan-name">Basic</div>
+              <div class="tk-plan-sub">Undangan simpel namun elegan</div>
+
+              <!-- Features -->
+              <div class="tk-features">
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">5 pilihan tema</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Data mempelai &amp; acara</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Countdown timer</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Peta Google Maps</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Galeri foto (maks 5 foto)</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Backsound musik</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">2× revisi (s/d 12 jam)</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon warn">~</span>
+                  <span class="tk-feat-label dimmed">Link aktif 2 bulan</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon no">✗</span>
+                  <span class="tk-feat-label dimmed">RSVP online</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon no">✗</span>
+                  <span class="tk-feat-label dimmed">Nama tamu otomatis</span>
+                </div>
+              </div>
+
+            </div><!-- /tk-content -->
+
+            <!-- Perforation -->
+            <div class="tk-perf"></div>
+          </div><!-- /tk-main -->
+
+          <!-- Stub -->
+          <div class="tk-stub">
+            <div class="tk-barcode-wrap">
+              <div class="tk-barcode"></div>
+              <div class="tk-barcode-id">PM-BASIC-001</div>
+            </div>
+            <div class="tk-price-wrap">
+              <div class="tk-price-label">Harga</div>
+              <div class="tk-price-amount">100K</div>
+              <div class="tk-price-period">/ undangan</div>
+            </div>
+          </div>
+
+        </div><!-- /tk-card -->
+      </div><!-- /tk-wrapper -->
+
+      <!-- CTA button di luar kartu -->
+      <div class="tk-cta-wrap">
+        <a href="https://wa.me/6283177839973?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20paket%20Basic"
+           target="_blank" rel="noopener noreferrer" class="tk-cta">
+          Pilih Basic
+        </a>
+      </div>
+    </div><!-- /tk-outer -->
+
+
+    <!-- ─── STANDARD (Featured) ───────── -->
+    <div class="tk-outer">
+      <div class="tk-wrapper tk-wrap-standard">
+        <div class="tk-card">
+
+          <div class="tk-main">
+            <div class="tk-content">
+
+              <div class="tk-header">
+                <div class="tk-logo">
+                  <span class="tk-logo-icon">💌</span>
+                  Print Memorie's
+                </div>
+                <div class="tk-badge featured">⭐ Terpopuler</div>
+              </div>
+
+              <div class="tk-plan-name">Standard</div>
+              <div class="tk-plan-sub">Paket paling diminati — fitur lengkap</div>
+
+              <div class="tk-features">
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">10 pilihan tema</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Data mempelai &amp; acara</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Countdown timer</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Peta Google Maps</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Galeri foto (10 foto)</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">RSVP online</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Backsound musik</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">7× revisi</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Link aktif selamanya</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon no">✗</span>
+                  <span class="tk-feat-label dimmed">Nama tamu otomatis</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tk-perf"></div>
+          </div>
+
+          <div class="tk-stub">
+            <div class="tk-barcode-wrap">
+              <div class="tk-barcode"></div>
+              <div class="tk-barcode-id">PM-STD-001</div>
+            </div>
+            <div class="tk-price-wrap">
+              <div class="tk-price-label">Harga</div>
+              <div class="tk-price-amount">150K</div>
+              <div class="tk-price-period">/ undangan</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tk-cta-wrap">
+        <a href="https://wa.me/6283177839973?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20paket%20Standard"
+           target="_blank" rel="noopener noreferrer" class="tk-cta gold">
+          ✨ Pilih Standard
+        </a>
+      </div>
+    </div>
+
+
+    <!-- ─── PREMIUM ────────────────────── -->
+    <div class="tk-outer">
+      <div class="tk-wrapper tk-wrap-premium">
+        <div class="tk-card">
+
+          <div class="tk-main">
+            <div class="tk-content">
+
+              <div class="tk-header">
+                <div class="tk-logo">
+                  <span class="tk-logo-icon">💌</span>
+                  Print Memorie's
+                </div>
+                <div class="tk-badge">Premium 👑</div>
+              </div>
+
+              <div class="tk-plan-name">Premium</div>
+              <div class="tk-plan-sub">Eksklusif — custom penuh &amp; fitur terlengkap</div>
+
+              <div class="tk-features">
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Desain custom penuh</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Semua tema tersedia</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Data mempelai &amp; acara</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Countdown timer</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Peta Google Maps</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Galeri foto unlimited</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">RSVP online</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Nama tamu otomatis</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Backsound musik</span>
+                </div>
+                <div class="tk-feat">
+                  <span class="tk-feat-icon yes">✓</span>
+                  <span class="tk-feat-label">Unlimited revisi</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tk-perf"></div>
+          </div>
+
+          <div class="tk-stub">
+            <div class="tk-barcode-wrap">
+              <div class="tk-barcode"></div>
+              <div class="tk-barcode-id">PM-PREM-001</div>
+            </div>
+            <div class="tk-price-wrap">
+              <div class="tk-price-label">Harga</div>
+              <div class="tk-price-amount">200K</div>
+              <div class="tk-price-period">/ undangan</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tk-cta-wrap">
+        <a href="https://wa.me/6283177839973?text=Halo%20Print%20Memorie%27s%2C%20saya%20ingin%20pesan%20paket%20Premium"
+           target="_blank" rel="noopener noreferrer" class="tk-cta">
+          Pilih Premium 👑
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /pricing-preview-grid -->
+
+  <!-- ─── Footer note ─── -->
+  <div style="text-align:center; margin-top:4rem; color:rgba(255,255,255,.3); font-size:0.78rem; line-height:2;">
+    Preview halaman terpisah — tidak mempengaruhi <code style="color:var(--gold)">index.html</code><br/>
+    Buka di browser: <code style="color:var(--gold)">http://localhost/usaha/print%20memorie's/preview-pricing-ticket.html</code>
+  </div>
+
+</body>
+</html>
+
